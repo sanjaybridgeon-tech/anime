@@ -1,6 +1,6 @@
-const BASE_URL = "http://localhost:8080";
+const API = import.meta.env.VITE_API_URL;
 
 export const getProducts = async () => {
-  const response = await fetch(`${BASE_URL}/products`);
-  return response.json();
+  const res = await fetch(`${API}/products`);
+  return res.json();
 };
