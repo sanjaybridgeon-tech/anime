@@ -100,13 +100,11 @@ function ProductList() {
 >
 
                 {/* 🖼 IMAGE */}
-                <div className="overflow-hidden">
-                  <img
-                    src={product.imageUrl}
-                    alt={product.name}
-                    className="w-full h-60 object-cover hover:scale-110 transition duration-500"
-                  />
-                </div>
+               <img
+  src={`${window.location.origin}/images/${product.imageUrl}`}
+  alt={product.name}
+  className="w-full rounded-xl"
+/>
 
                 {/* 📦 CONTENT */}
                 <div className="p-5">
