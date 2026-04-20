@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 function ChatBot() {
+  const API = import.meta.env.VITE_API_URL;
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
@@ -40,13 +41,13 @@ function ChatBot() {
     setChat(prev => [...prev, { sender: "bot", text: "Typing..." }]);
 
     try {
-      const res = await fetch("http://localhost:8080/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: currentMessage }),
-      });
+      const res = await fetch(`${API}/chat`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ message: currentMessage }),
+});
 
       const data = await res.text();
 
