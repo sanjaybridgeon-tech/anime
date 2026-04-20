@@ -84,10 +84,10 @@ function ProductDetails() {
 
         {/* 🖼 IMAGE */}
         <img
-          src={product.imageUrl.replace("public", "")}
-          alt={product.name}
-          className="w-full rounded-xl"
-        />
+  src={`${window.location.origin}/images/${product.imageUrl}`}
+  alt={product.name}
+  className="w-full rounded-xl"
+/>
 
         {/* 📦 DETAILS */}
         <div>
