@@ -29,3 +29,8 @@ export const loginUser = async (data) => {
   });
   return res.text();
 };
+// GET PRODUCT BY ID
+export const getProductById = async (id) => {
+  const res = await fetch(`${API}/products/${id}`);
+  return res.json();
+};

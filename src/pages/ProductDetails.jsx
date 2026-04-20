@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getProductById } from "../services/api";
 
 function ProductDetails() {
+  const API = import.meta.env.VITE_API_URL;
   const { id } = useParams();
   const userId = localStorage.getItem("userId");
 
@@ -10,70 +12,77 @@ function ProductDetails() {
 
   // 🔄 Load product
   useEffect(() => {
-    fetch(`http://localhost:8080/products/${id}`)
-      .then(res => res.json())
-      .then(data => setProduct(data));
-  }, [id]);
+  const loadProduct = async () => {
+    try {
+      const data = await getProductById(id);
+      setProduct(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  loadProduct();
+}, [id]);
 
   // 🔄 Load cart item for this product
-  useEffect(() => {
-    if (!userId) return;
+ useEffect(() => {
+  if (!userId) return;
 
-    fetch(`http://localhost:8080/cart/${userId}`)
-      .then(res => res.json())
-      .then(data => {
-        const item = data.find(i => i.productId == id);
-        setCartItem(item || null);
-      });
-  }, [id, userId]);
+  fetch(`${API}/cart/${userId}`)
+    .then(res => res.json())
+    .then(data => {
+      const item = data.find(i => i.productId == id);
+      setCartItem(item || null);
+    });
+}, [id, userId]);
 
   // ➕ ADD TO CART
   const addToCart = async () => {
-    if (!userId) {
-      alert("Please login first ⚠️");
-      return;
-    }
+  if (!userId) {
+    alert("Please login first ⚠️");
+    return;
+  }
 
-    await fetch("http://localhost:8080/cart/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId,
-        productId: product.id,
-        name: product.name,
-        price: product.price,
-        imageUrl: product.imageUrl,
-      }),
-    });
+  await fetch(`${API}/cart/add`, {   // ✅ FIXED HERE
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId,
+      productId: product.id,
+      name: product.name,
+      price: product.price,
+      imageUrl: product.imageUrl,
+    }),
+  });
 
-    loadCart();
-  };
+  loadCart();
+};
 
   // 🔄 Reload cart
-  const loadCart = async () => {
-    const res = await fetch(`http://localhost:8080/cart/${userId}`);
-    const data = await res.json();
-    const item = data.find(i => i.productId == id);
-    setCartItem(item || null);
-  };
+ const loadCart = async () => {
+  const res = await fetch(`${API}/cart/${userId}`);
+  const data = await res.json();
+  const item = data.find(i => i.productId == id);
+  setCartItem(item || null);
+};
 
   // ➕ INCREASE
   const increaseQty = async () => {
-    await fetch(`http://localhost:8080/cart/increase/${cartItem.id}`, {
-      method: "POST",
-    });
-    loadCart();
-  };
+  await fetch(`${API}/cart/increase/${cartItem.id}`, {
+    method: "POST",
+  });
+  loadCart();
+};
 
   // ➖ DECREASE
   const decreaseQty = async () => {
-    await fetch(`http://localhost:8080/cart/decrease/${cartItem.id}`, {
-      method: "POST",
-    });
-    loadCart();
-  };
+  await fetch(`${API}/cart/decrease/${cartItem.id}`, {
+    method: "POST",
+  });
+  loadCart();
+};
 
   if (!product) return <p>Loading...</p>;
 

@@ -2,21 +2,22 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Cart() {
+  const API = import.meta.env.VITE_API_URL;
   const [cart, setCart] = useState([]);
   const userId = localStorage.getItem("userId");
   const navigate=useNavigate();
 
   // 🔄 Load cart from backend
   const loadCart = async () => {
-    try {
-      const res = await fetch(`http://localhost:8080/cart/${userId}`);
-      const data = await res.json();
-      setCart(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.error(err);
-      setCart([]);
-    }
-  };
+  try {
+    const res = await fetch(`${API}/cart/${userId}`);
+    const data = await res.json();
+    setCart(Array.isArray(data) ? data : []);
+  } catch (err) {
+    console.error(err);
+    setCart([]);
+  }
+};
 
   useEffect(() => {
     if (userId) {
@@ -26,42 +27,39 @@ function Cart() {
 
   // ➕ Increase quantity (BACKEND CONTROL)
   const increaseQty = async (id) => {
-    try {
-      await fetch(`http://localhost:8080/cart/increase/${id}`, {
-        method: "POST",
-      });
-
-      loadCart();
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  try {
+    await fetch(`${API}/cart/increase/${id}`, {
+      method: "POST",
+    });
+    loadCart();
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   // ➖ Decrease quantity (BACKEND CONTROL)
   const decreaseQty = async (id) => {
-    try {
-      await fetch(`http://localhost:8080/cart/decrease/${id}`, {
-        method: "POST",
-      });
-
-      loadCart();
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  try {
+    await fetch(`${API}/cart/decrease/${id}`, {
+      method: "POST",
+    });
+    loadCart();
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   // ❌ Remove item
-  const removeItem = async (id) => {
-    try {
-      await fetch(`http://localhost:8080/cart/${id}`, {
-        method: "DELETE",
-      });
-
-      loadCart();
-    } catch (err) {
-      console.error(err);
-    }
-  };
+ const removeItem = async (id) => {
+  try {
+    await fetch(`${API}/cart/${id}`, {
+      method: "DELETE",
+    });
+    loadCart();
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   // 💰 Total (UI logic stays frontend)
   const total = cart.reduce((sum, item) => {

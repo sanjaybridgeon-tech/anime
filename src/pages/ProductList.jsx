@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 
 function ProductList() {
+  const API = import.meta.env.VITE_API_URL;
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const navigate = useNavigate();
@@ -18,19 +19,19 @@ function ProductList() {
 
   // 🔄 Load cart from backend
   useEffect(() => {
-    if (!userId) return;
+  if (!userId) return;
 
-    fetch(`http://localhost:8080/cart/${userId}`)
-      .then(res => {
-        if (!res.ok) throw new Error("Failed to fetch cart");
-        return res.json();
-      })
-      .then(data => setCart(Array.isArray(data) ? data : []))
-      .catch(err => {
-        console.error(err);
-        setCart([]);
-      });
-  }, [userId]);
+  fetch(`${API}/cart/${userId}`)
+    .then(res => {
+      if (!res.ok) throw new Error("Failed to fetch cart");
+      return res.json();
+    })
+    .then(data => setCart(Array.isArray(data) ? data : []))
+    .catch(err => {
+      console.error(err);
+      setCart([]);
+    });
+}, [userId]);
 
   // 🛒 Add to cart (backend)
   const addToCart = async (product) => {
@@ -40,24 +41,24 @@ function ProductList() {
     }
 
     try {
-      const res = await fetch("http://localhost:8080/cart/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: userId,
-          productId: product.id,
-          name: product.name,
-          price: product.price,
-          imageUrl: product.imageUrl,
-        }),
-      });
+      const res = await fetch(`${API}/cart/add`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    userId: userId,
+    productId: product.id,
+    name: product.name,
+    price: product.price,
+    imageUrl: product.imageUrl,
+  }),
+});
 
       if (!res.ok) throw new Error("Add to cart failed");
 
       // 🔥 Refresh cart after add
-      const updatedCart = await fetch(`http://localhost:8080/cart/${userId}`);
+     const updatedCart = await fetch(`${API}/cart/${userId}`);
       const data = await updatedCart.json();
       setCart(data);
 
