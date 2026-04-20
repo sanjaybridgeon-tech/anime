@@ -86,9 +86,9 @@ function Cart() {
             >
               {/* 🖼 Image */}
               <img
-  src={`${window.location.origin}/images/${product.imageUrl}`}
-  alt={product.name}
-  className="w-full rounded-xl"
+  src={`${window.location.origin}/images/${item.imageUrl}`}
+  alt={item.name}
+  className="w-24 h-24 object-cover rounded"
 />
 
               {/* 📦 Info */}
