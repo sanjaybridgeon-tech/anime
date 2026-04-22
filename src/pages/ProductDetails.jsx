@@ -93,7 +93,7 @@ function ProductDetails() {
 
         {/* 🖼 IMAGE */}
         <img
-  src={`${window.location.origin}/images/${product.imageUrl}`}
+  src={`${product.imageUrl}`}
   alt={product.name}
   className="w-full rounded-xl"
 />

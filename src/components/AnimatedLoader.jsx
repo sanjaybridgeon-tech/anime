@@ -1,3 +1,4 @@
+
 function AnimatedLoader() {
   return (
     <div className="fixed inset-0 w-full h-full bg-black z-50">
@@ -12,5 +13,6 @@ function AnimatedLoader() {
     </div>
   );
 }
+
 
 export default AnimatedLoader;
