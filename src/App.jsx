@@ -6,7 +6,6 @@ import Register from "./pages/Register";
 import Cart from "./pages/Cart";
 import ChatBot from "./components/ChatBot";
 import Payment from "./pages/Payment";
-import ProductDetails from "./pages/ProductDetails";
 import React, { Suspense } from "react";
 import AnimatedLoader from "./components/AnimatedLoader";
 
@@ -22,7 +21,11 @@ const ProductList = React.lazy(() =>
     setTimeout(() => resolve(import("./pages/ProductList")), 2000);
   })
 );
-
+const ProductDetails = React.lazy(() =>
+  new Promise((resolve) => {
+    setTimeout(() => resolve(import("./pages/ProductDetails")), 2000);
+  })
+);
 // 🔥 Layout Component
 function Layout() {
   const location = useLocation();

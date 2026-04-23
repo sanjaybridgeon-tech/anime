@@ -8,14 +8,20 @@ function ProductList() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const navigate = useNavigate();
+  const [search, setSearch] = useState("");
+const [loading, setLoading] = useState(false);
 
 
   const userId = localStorage.getItem("userId"); // 🔥 dynamic user
 
   // 🔄 Load products
   useEffect(() => {
-    getProducts().then(data => setProducts(data));
-  }, []);
+  const timer = setTimeout(() => {
+    fetchProducts();
+  }, 300); // debounce
+
+  return () => clearTimeout(timer);
+}, [search]);
 
   // 🔄 Load cart from backend
   useEffect(() => {
@@ -67,6 +73,26 @@ function ProductList() {
       alert("Error adding to cart ❌");
     }
   };
+  const fetchProducts = async () => {
+  try {
+    setLoading(true);
+
+    let url = `${API}/products`;
+
+    if (search.trim() !== "") {
+      url += `?search=${search}`;
+    }
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    setProducts(data);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#020617] via-[#020617] to-black text-white p-6">
@@ -75,6 +101,17 @@ function ProductList() {
       <h1 className="text-4xl md:text-5xl text-center font-bold text-yellow-400 mb-16">
         Anime Books
       </h1>
+      <div className="max-w-3xl mx-auto mb-10">
+  <input
+    type="text"
+    placeholder="Search anime products..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    className="w-full px-5 py-3 rounded-xl bg-[#111827] text-white 
+    border border-gray-700 focus:outline-none focus:ring-2 
+    focus:ring-yellow-400"
+  />
+</div>
 
       {/* ❌ No products */}
       {products.length === 0 ? (
