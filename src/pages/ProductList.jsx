@@ -101,18 +101,18 @@ const [loading, setLoading] = useState(false);
       <h1 className="text-4xl md:text-5xl text-center font-bold text-yellow-400 mb-16">
         Anime Books
       </h1>
-      <div className="max-w-3xl mx-auto mb-10">
-  <input
-    type="text"
-    placeholder="Search anime products..."
-    value={search}
-    onChange={(e) => setSearch(e.target.value)}
-    className="w-full px-5 py-3 rounded-xl bg-[#111827] text-white 
-    border border-gray-700 focus:outline-none focus:ring-2 
-    focus:ring-yellow-400"
-  />
+      <div className="flex justify-center mb-10">
+  <div className="flex items-center border-b border-gray-500 focus-within:border-yellow-400">
+    <span className="text-gray-400 mr-2"></span>
+    <input
+      type="text"
+      placeholder="Search..."
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      className="bg-transparent text-white px-1 py-1 focus:outline-none placeholder-gray-400"
+    />
+  </div>
 </div>
-
       {/* ❌ No products */}
       {products.length === 0 ? (
         <p className="text-center text-gray-400">No products found</p>
