@@ -8,6 +8,12 @@ import ChatBot from "./components/ChatBot";
 import Payment from "./pages/Payment";
 import React, { Suspense } from "react";
 import AnimatedLoader from "./components/AnimatedLoader";
+import AdminRoute from "./admin/AdminRoute";
+import Dashboard from "./admin/Dashboard";
+import AdminLayout from "./admin/AdminLayout";
+import Users from "./admin/Users";
+import Orders from "./admin/Orders";
+import AdminProducts from "./admin/AdminProducts";
 
 // ✅ FIXED Lazy Loading
 const Home = React.lazy(() =>
@@ -41,6 +47,19 @@ function Layout() {
 
       <div className="flex-grow">
         <Routes>
+         <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminLayout />
+              </AdminRoute>
+            }
+          >
+            <Route index element={<Dashboard />} />
+            <Route path="users" element={<Users />} />
+              <Route path="orders" element={<Orders/>} />
+<Route path="products" element={<AdminProducts />} />
+          </Route>
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/products" element={<ProductList />} />

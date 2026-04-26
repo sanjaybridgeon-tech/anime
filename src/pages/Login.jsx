@@ -27,15 +27,19 @@ const Login = () => {
   },
   body: JSON.stringify({ email, password }),
 });
-
-const data = await res.text(); // ✅ read ONCE
+console.log(res);
+const data = await res.json();
 
 if (res.ok) {
-  localStorage.setItem("userId", data); // ✅ use it
-  navigate("/");
+localStorage.setItem("userId", data.id);
+localStorage.setItem("role", data.role);
+  if (data.role === "ADMIN") {
+  navigate("/admin"); // 🔥 admin panel
 } else {
-  alert(data || "Login Failed ❌");
+  navigate("/"); // normal user
 }
+} else {
+alert(typeof data === "string" ? data : JSON.stringify(data));}
     } catch (error) {
       console.error(error);
       alert("Server error ⚠️");
