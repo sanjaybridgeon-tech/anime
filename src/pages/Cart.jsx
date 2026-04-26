@@ -86,7 +86,7 @@ function Cart() {
             >
               {/* 🖼 Image */}
               <img
-  src={`${window.location.origin}/images/${item.imageUrl}`}
+  src={`${item.imageUrl}`}
   alt={item.name}
   className="w-24 h-24 object-cover rounded"
 />
