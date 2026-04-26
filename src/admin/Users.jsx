@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 
+const API = import.meta.env.VITE_API_URL;
+
 const Users = () => {
   const [users, setUsers] = useState([]);
 
   // 📦 Load users
   useEffect(() => {
-    fetch("http://localhost:8080/auth/all")
+    fetch(`${API}/auth/all`)
       .then((res) => res.json())
       .then((data) => setUsers(data))
       .catch((err) => console.error(err));
@@ -19,7 +21,7 @@ const Users = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:8080/auth/${id}?role=${role}`,
+        `${API}/auth/${id}?role=${role}`,
         { method: "DELETE" }
       );
 
