@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getProducts } from "../services/api";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../Context/AuthContext";
 
 
 function ProductList() {
@@ -9,11 +11,9 @@ function ProductList() {
   const [cart, setCart] = useState([]);
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
-const [loading, setLoading] = useState(false);
+const [loading, setLoading] = useState(true);
 
-
-  const userId = localStorage.getItem("userId"); // 🔥 dynamic user
-
+const { userId } = useContext(AuthContext);
   // 🔄 Load products
   useEffect(() => {
   const timer = setTimeout(() => {
@@ -77,8 +77,9 @@ const [loading, setLoading] = useState(false);
   try {
     setLoading(true);
 
-    let url = `${API}/products`;
+    const start = Date.now(); // ⏱ start time
 
+    let url = `${API}/products`;
     if (search.trim() !== "") {
       url += `?search=${search}`;
     }
@@ -87,11 +88,29 @@ const [loading, setLoading] = useState(false);
     const data = await res.json();
 
     setProducts(data);
+
+    // 🔥 Minimum skeleton time (500ms)
+    const elapsed = Date.now() - start;
+    if (elapsed < 500) {
+      await new Promise(r => setTimeout(r, 500 - elapsed));
+    }
+
   } catch (error) {
     console.error(error);
   } finally {
     setLoading(false);
   }
+};
+const SkeletonCard = () => {
+  return (
+    <div className="animate-pulse bg-[#111827] rounded-2xl p-5">
+      <div className="bg-gray-700 h-48 w-full rounded-xl mb-4"></div>
+      <div className="bg-gray-700 h-4 w-3/4 mb-2"></div>
+      <div className="bg-gray-700 h-4 w-1/2 mb-2"></div>
+      <div className="bg-gray-700 h-4 w-1/4 mb-4"></div>
+      <div className="bg-gray-700 h-10 w-full rounded-lg"></div>
+    </div>
+  );
 };
 
   return (
@@ -114,9 +133,19 @@ const [loading, setLoading] = useState(false);
   </div>
 </div>
       {/* ❌ No products */}
-      {products.length === 0 ? (
-        <p className="text-center text-gray-400">No products found</p>
-      ) : (
+      {loading ? (
+  // 🔥 SHOW SKELETON
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+    {Array(6).fill(0).map((_, index) => (
+      <SkeletonCard key={index} />
+    ))}
+  </div>
+
+) : products.length === 0 ? (
+  // ❌ NO PRODUCTS
+  <p className="text-center text-gray-400">No products found</p>
+
+) : (
 
         /* 📚 GRID */
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto">

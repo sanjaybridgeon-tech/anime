@@ -1,10 +1,12 @@
-import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useState, useContext } from "react";
+import { AuthContext } from "../Context/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const { login } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -31,8 +33,7 @@ console.log(res);
 const data = await res.json();
 
 if (res.ok) {
-localStorage.setItem("userId", data.id);
-localStorage.setItem("role", data.role);
+login(data.id, data.role);
   if (data.role === "ADMIN") {
   navigate("/admin"); // 🔥 admin panel
 } else {

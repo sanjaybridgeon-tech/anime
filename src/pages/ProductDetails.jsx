@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getProductById } from "../services/api";
-
+import { useContext } from "react";
+import { AuthContext } from "../Context/AuthContext";
 function ProductDetails() {
   const API = import.meta.env.VITE_API_URL;
   const { id } = useParams();
-  const userId = localStorage.getItem("userId");
-
   const [product, setProduct] = useState(null);
   const [cartItem, setCartItem] = useState(null);
+  const { userId } = useContext(AuthContext);
+
 
   // 🔄 Load product
   useEffect(() => {
