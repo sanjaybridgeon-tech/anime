@@ -101,6 +101,7 @@ function Home() {
               Explore Books
             </Link>
           </div>
+          
         </div>
       </div>
 
@@ -177,9 +178,56 @@ function Home() {
             View All Books
           </Link>
         </div>
+        
       </div>
+      {/* 📖 ABOUT SECTION WITH 3D MODEL */}
+<div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black flex items-center px-6 py-16">
+  
+  <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+    
+    {/* 📝 LEFT SIDE (TEXT) */}
+    <div className="text-white space-y-6">
+      <h2 className="text-4xl md:text-5xl font-bold text-yellow-400">
+        About Our Store
+      </h2>
+
+      <p className="text-gray-300 text-lg leading-relaxed">
+        Welcome to our Anime Book Store — a place where stories come alive.
+        We bring you the most popular and trending anime books from all over the world.
+      </p>
+
+      <p className="text-gray-400">
+        From action-packed adventures like Attack on Titan to emotional journeys,
+        our collection is designed for true anime lovers.
+      </p>
+
+      <button className="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-lg font-semibold transition-transform hover:scale-105">
+        Learn More
+      </button>
+    </div>
+
+    {/* 🎮 RIGHT SIDE (3D MODEL) */}
+    <div className="flex justify-center items-center">
+      <model-viewer
+        src="images/textured_mesh.glb"
+        alt="3D Book"
+        auto-rotate
+        camera-controls
+        shadow-intensity="1"
+        exposure="1"
+        style={{
+          width: "100%",
+          height: "400px",
+          background: "transparent"
+        }}
+      ></model-viewer>
+    </div>
+
+  </div>
+</div>
 
     </div>
+    
   );
 }
 
