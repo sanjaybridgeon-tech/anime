@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext";
 
 function Cart() {
   const API = import.meta.env.VITE_API_URL;
   const [cart, setCart] = useState([]);
-  const userId = localStorage.getItem("userId");
   const navigate=useNavigate();
+    const { userId } = useContext(AuthContext);
+  
 
   // 🔄 Load cart from backend
   const loadCart = async () => {
