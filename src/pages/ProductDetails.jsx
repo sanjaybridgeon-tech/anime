@@ -95,10 +95,8 @@ function ProductDetails() {
       <div className="min-h-screen bg-black flex items-center justify-center p-6 text-white">
         <div className="max-w-5xl w-full grid md:grid-cols-2 gap-10 animate-pulse">
           
-          {/* Image Skeleton */}
           <div className="bg-gray-700 h-[400px] rounded-xl"></div>
 
-          {/* Text Skeleton */}
           <div className="space-y-4">
             <div className="bg-gray-700 h-8 w-1/2 rounded"></div>
             <div className="bg-gray-700 h-6 w-full rounded"></div>
@@ -123,8 +121,8 @@ function ProductDetails() {
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center p-6">
 
-      {/* CENTERED CARD */}
-      <div className="max-w-5xl w-full grid md:grid-cols-2 gap-10 bg-gray-900 p-6 rounded-2xl shadow-lg">
+      {/* 🎯 CENTERED CARD WITH ANIMATION */}
+      <div className={`max-w-5xl w-full grid md:grid-cols-2 gap-10 bg-gray-900 p-6 rounded-2xl shadow-lg ${!loading ? "animate-fadeIn" : ""}`}>
 
         {/* 🖼 IMAGE */}
         <img
@@ -151,7 +149,6 @@ function ProductDetails() {
             Stock: {product.stock > 0 ? "Available ✅" : "Out of Stock ❌"}
           </p>
 
-          {/* 🔥 CART */}
           {!cartItem ? (
             <button
               onClick={addToCart}
