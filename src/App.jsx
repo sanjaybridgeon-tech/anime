@@ -14,6 +14,7 @@ import AdminLayout from "./admin/AdminLayout";
 import Users from "./admin/Users";
 import Orders from "./admin/Orders";
 import AdminProducts from "./admin/AdminProducts";
+import { Toaster } from "sonner";
 
 // ✅ FIXED Lazy Loading
 const Home = React.lazy(() =>
@@ -80,6 +81,9 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col">
       <BrowserRouter>
+              <Toaster position="top-right" richColors />
+
+
         <Suspense fallback={<AnimatedLoader />}>
           <Layout />
         </Suspense>

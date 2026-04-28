@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { toast } from "sonner";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -18,10 +19,10 @@ const Register = () => {
     });
 
     if (res.ok) {
-      alert("Registered Successfully");
+      toast.success("Registered Successfully");
       navigate("/login");
     } else {
-      alert("Register Failed");
+      toast.error("Register Failed");
     }
   };
 

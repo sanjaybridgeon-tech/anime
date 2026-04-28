@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { getProductById } from "../services/api";
 import { AuthContext } from "../Context/AuthContext";
+import { toast } from "sonner";
 
 function ProductDetails() {
   const API = import.meta.env.VITE_API_URL;
@@ -52,7 +53,7 @@ function ProductDetails() {
   // ➕ ADD TO CART
   const addToCart = async () => {
     if (!userId) {
-      alert("Please login first ⚠️");
+      toast.info("Please login first ⚠️");
       return;
     }
 

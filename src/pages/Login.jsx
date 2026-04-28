@@ -1,6 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
+import { toast } from "sonner";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ const Login = () => {
 
     // 🛑 Validation
     if (!email || !password) {
-      alert("Please enter email and password");
+      toast.info("Please enter email and password");
       return;
     }
 
@@ -43,7 +44,7 @@ login(data.id, data.role);
 alert(typeof data === "string" ? data : JSON.stringify(data));}
     } catch (error) {
       console.error(error);
-      alert("Server error ⚠️");
+      toast.error("Server error ⚠️");
     } finally {
       setLoading(false);
     }

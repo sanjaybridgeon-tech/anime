@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 function Payment() {
   const [cart, setCart] = useState([]);
@@ -65,7 +66,7 @@ function Payment() {
         order_id: data.id,
 
         handler: async function (response) {
-          alert("Payment Successful 🎉");
+          toast.success("Payment Successful 🎉");
 
           // 🔥 SEND STRUCTURED ADDRESS
           await fetch("http://localhost:8080/order/place", {
@@ -92,7 +93,7 @@ function Payment() {
 
     } catch (err) {
       console.error(err);
-      alert("Payment failed ❌");
+      toast.error("Payment failed ❌");
     }
   };
 

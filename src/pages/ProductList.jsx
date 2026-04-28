@@ -3,6 +3,7 @@ import { getProducts } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
+import { toast } from "sonner";
 
 
 function ProductList() {
@@ -42,7 +43,7 @@ const { userId } = useContext(AuthContext);
   // 🛒 Add to cart (backend)
   const addToCart = async (product) => {
     if (!userId) {
-      alert("Please login first ⚠️");
+      toast.info("Please login first ⚠️");
       return;
     }
 
@@ -70,7 +71,7 @@ const { userId } = useContext(AuthContext);
 
     } catch (error) {
       console.error(error);
-      alert("Error adding to cart ❌");
+      toast.error("Error adding to cart ❌")
     }
   };
   const fetchProducts = async () => {
