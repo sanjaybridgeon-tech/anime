@@ -17,9 +17,14 @@ function Navbar() {
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-transparent text-white px-6 py-4 flex justify-between items-center">
 
-      <h1 className="text-4xl md:text-5xl text-yellow-300 tracking-widest">
-        Anime Store
-      </h1>
+      
+<Link to="/">
+  <img
+    src="/images/Logo.png"
+    alt="Anime Store"
+    className="h-12 md:h-14 object-contain hover:scale-105 transition"
+  />
+</Link>
 
       <div className="flex gap-6 items-center">
 
