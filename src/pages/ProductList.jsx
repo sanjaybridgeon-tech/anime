@@ -139,7 +139,7 @@ const SkeletonCard = () => {
     ))}
   </div>
 
-) : products.length === 0 ? (
+) : !Array.isArray(products) || products.length === 0 ?(
   // ❌ NO PRODUCTS
   <p className="text-center text-gray-400">No products found</p>
 
@@ -148,7 +148,7 @@ const SkeletonCard = () => {
         /* 📚 GRID */
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
 
-          {products.map(product => {
+          {Array.isArray(products) && products.map(product => {
 
             // 🔍 find matching cart item
             const cartItem = cart.find(
