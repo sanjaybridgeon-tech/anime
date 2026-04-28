@@ -87,8 +87,7 @@ const { userId } = useContext(AuthContext);
     const res = await fetch(url);
     const data = await res.json();
 
-    setProducts(data);
-
+setProducts(data.content);
     // 🔥 Minimum skeleton time (500ms)
     const elapsed = Date.now() - start;
     if (elapsed < 500) {
