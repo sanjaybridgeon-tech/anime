@@ -1,4 +1,4 @@
-// src/pages/AdminProducts.jsx
+// src/admin/AdminProducts.jsx
 import { useEffect, useState } from "react";
 
 const API = import.meta.env.VITE_API_URL;
@@ -15,20 +15,15 @@ const AdminProducts = () => {
 
   const role = localStorage.getItem("role");
 
-  // 🚫 Block non-admin
-  if (role !== "ADMIN") {
-    return <h2>Access Denied 🚫</h2>;
-  }
-
   // 📦 Fetch products
   const fetchProducts = async (query = "") => {
     const res = await fetch(`${API}/products${query ? `?search=${query}` : ""}`);
     const data = await res.json();
-    setProducts(data);
+    setProducts(data.content ?? data); // ✅ handles paginated response
   };
 
   useEffect(() => {
-    fetchProducts();
+    if (role === "ADMIN") fetchProducts(); // ✅ only fetch if admin
   }, []);
 
   // ✍️ Handle input
@@ -85,6 +80,11 @@ const AdminProducts = () => {
     e.preventDefault();
     fetchProducts(search);
   };
+
+  // 🚫 Block non-admin — AFTER all hooks
+  if (role !== "ADMIN") {
+    return <h2>Access Denied 🚫</h2>;
+  }
 
   return (
     <div style={{ padding: "20px" }}>
